@@ -187,3 +187,5 @@ This is returned because we haven’t called any reducer, so it just returns the
     form.reset();
 }
 ```
+## Conclusion
+![final](https://user-images.githubusercontent.com/89549639/188875551-96da19b0-1436-4ddf-8f70-af4a9fe6e23e.gif)
