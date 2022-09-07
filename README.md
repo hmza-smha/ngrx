@@ -4,8 +4,8 @@
 
 When working on an Angular application, there is no out-of-the-box, quick solution for data persistence. As a result, the experience of developing a very large application that requires a lot of data communication between components can be very stressful.
 
-> it is complex *(based on functional programming)*.
-> Working with large-scale applications requires good architecture and organized structure. State management tools such as NgRx can help you maintain a readable codebase as your app scales.
+- It is complex *(based on functional programming)*. But,
+- Working with large-scale applications requires good architecture and organized structure. State management tools such as NgRx can help you maintain a readable codebase as your app scales.
 
 ## Managing state in frontend applications
 
@@ -112,7 +112,7 @@ Recall that the objective of NgRx or any state management system is to keep all 
 
 Add the following to the file you just created:
 
-```
+```js
 import { CourseItem } from './courseItem.model';
 
 export interface State {
