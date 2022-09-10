@@ -109,4 +109,68 @@ Registering states with ```StoreModule.forRoot()``` ensures that the states are 
 
 
 ## Selectors
-Selectors are pure functions used for obtaining slices of store state. 
+- Selectors are pure functions used for obtaining slices of store state. 
+- @ngrx/store provides a few helper functions for optimizing this selection. 
+
+
+When using the createSelector and createFeatureSelector functions @ngrx/store keeps track of the latest arguments in which your selector function was invoked. Because selectors are pure functions, the last result can be returned when the arguments match without reinvoking your selector function. This can provide performance benefits, particularly with selectors that perform expensive computation. This practice is known as memoization.
+
+
+For example, imagine you have a selectedUser object in the state. You also have an allBooks array of book objects.
+
+And you want to show all books for the current user.
+
+You can use createSelector to achieve just that.
+
+```js
+import { createSelector } from '@ngrx/store';
+
+export interface User {
+  id: number;
+  name: string;
+}
+
+export interface Book {
+  id: number;
+  userId: number;
+  name: string;
+}
+
+export interface AppState {
+  selectedUser: User;
+  allBooks: Book[];
+}
+
+export const selectUser = (state: AppState) => state.selectedUser;
+export const selectAllBooks = (state: AppState) => state.allBooks;
+
+export const selectVisibleBooks = createSelector(
+  selectUser,
+  selectAllBooks,
+  (selectedUser: User, allBooks: Book[]) => {
+    if (selectedUser && allBooks) {
+      return allBooks.filter((book: Book) => book.userId === selectedUser.id);
+    } else {
+      return allBooks;
+    }
+  }
+);
+
+
+### Using selectors with props
+To select a piece of state based on data that isn't available in the store you can pass props to the selector function. These props gets passed through every selector and the projector function. To do so we must specify these props when we use the selector inside our component.
+
+For example if we have a counter and we want to multiply its value, we can add the multiply factor as a prop:
+
+```js
+export const getCount = createSelector(
+  getCounterValue,
+  (counter, props) => counter * props.multiply
+);
+```
+
+```js
+ngOnInit() {
+  this.counter = this.store.select(fromRoot.getCount, { multiply: 2 })
+}
+```
