@@ -29,7 +29,10 @@ export const login = createAction(
 ```
 The createAction function returns a function, that when called returns an object in the shape of the Action interface. The props method is used to define any additional metadata needed for the handling of the action. Action creators provide a consistent, type-safe way to construct an action that is being dispatched.
 
-To dispatch this action:
+### To dispatch this action:
+
+- When dispatching an action it send to ALL reducers
+
 
 ```js
 onSubmit(username: string, password: string) {
@@ -174,3 +177,7 @@ ngOnInit() {
   this.counter = this.store.select(fromRoot.getCount, { multiply: 2 })
 }
 ```
+
+## Important Things
+- Any action you dispatch always reach all reducers
+- When you initializing the StoreModule in the AppModule, it sent an initial action to ALL reducers, so you must have the 'default' case in the switch statements in all reducers
